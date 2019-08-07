@@ -81,6 +81,7 @@ variable "default_cache_behavior_allowed_methods" {
 
 variable "default_cache_behavior_cached_methods" {
   description = "Controls which HTTP methods CloudFront processes and forwards to your Amazon S3 bucket or your custom origin."
+  type        = list(string)
   default     = ["GET", "HEAD"]
 }
 

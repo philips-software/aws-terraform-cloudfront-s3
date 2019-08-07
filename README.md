@@ -4,7 +4,15 @@ A terraform module to a CloudFront Distribution for serving content via a S3 buc
 
 By default a route53 record will be created for the provided dns_name. The subdomain is by default a combination of the `environment` and `name`, but can be overridden by providing a `subdomain`. The certificate needs to be a valid certificate and at least available in `us-east-1`.
 
-## Usages
+
+## Terraform version
+
+- Terraform 0.12: Pin module to `~> 2+`, submit pull request to branch `terrafomr012`
+- Terraform 0.11: Pin module to `~> 1.x`, submit pull request to branch `develop`
+
+
+## Example usages:
+See also the [full examples](./examples).
 
 ```
 module "cloudfront" {
@@ -32,7 +40,7 @@ aws s3 sync d --sse --delete . s3://<bucket>
 | bucket\_versioning | A state of versioning | bool | `"false"` | no |
 | custom\_error\_response | One or more custom error response elements (multiples allowed), see https://www.terraform.io/docs/providers/aws/r/cloudfront_distribution.html#custom-error-response-arguments | list(map(string)) | `<list>` | no |
 | default\_cache\_behavior\_allowed\_methods | Controls whether CloudFront caches the response to requests using the specified HTTP methods. | list(string) | `<list>` | no |
-| default\_cache\_behavior\_cached\_methods | Controls which HTTP methods CloudFront processes and forwards to your Amazon S3 bucket or your custom origin. | list | `<list>` | no |
+| default\_cache\_behavior\_cached\_methods | Controls which HTTP methods CloudFront processes and forwards to your Amazon S3 bucket or your custom origin. | list(string) | `<list>` | no |
 | default\_cache\_behavior\_compress | Whether you want CloudFront to automatically compress content for web requests that include Accept-Encoding: gzip in the request header (default: false). | bool | `"false"` | no |
 | default\_root\_object | The object that you want CloudFront to return (for example, index.html) when an end user requests the root URL. | string | `"index.html"` | no |
 | default\_ttl | The default amount of time (in seconds) that an object is in a CloudFront cache before CloudFront forwards another request in the absence of an Cache-Control max-age or Expires header. Defaults to 1 day. | number | `"86400"` | no |
@@ -64,6 +72,13 @@ aws s3 sync d --sse --delete . s3://<bucket>
 Currently the automated checks are limited. In CI the following checks are done for the root and each example.
 - lint: `terraform validate` and `terraform fmt`
 - basic init / get check: `terraform init -get -backend=false -input=false`
+
+## Generation variable documentation
+A markdown table for variables can be generated as follow. Generation requires awk and terraform-docs installed.
+
+```
+ .ci/bin/terraform-docs.sh markdown
+```
 
 ## Philips Forest
 
