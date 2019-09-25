@@ -8,7 +8,7 @@ output "cloudfront_dns_record" {
   value       = aws_cloudfront_distribution.web.domain_name
 }
 
-output "cloudfront_bucket_arn" {
+output "cloudfront_bucket" {
   description = "Cloudfront bucket for serving content. (id, arn, domain_name, regional_domain_name)"
   value = {
     id                   = aws_s3_bucket.web.id
